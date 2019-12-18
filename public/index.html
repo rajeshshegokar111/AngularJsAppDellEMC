@@ -1,0 +1,90 @@
+<!doctype html>
+
+<!-- ASSIGN OUR ANGULAR MODULE -->
+<html ng-app="calmodule">
+<head>
+	<!-- META -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1"><!-- Optimize mobile viewport -->
+
+	<title>DELLEMC - AngularJS app with Database Assignment</title>
+
+	<!-- SCROLLS -->
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"><!-- load bootstrap -->
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+	<style>
+		html 					{ overflow-y:scroll; }
+		body 					{ padding-top:50px; }
+		#cal-list 				{ margin-bottom:30px; }
+		#cal-form 	 			{ margin-bottom:50px; }
+		span                    { background-color:red; font-weight: bold; }
+	</style>
+
+	<!-- SPELLS -->
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script><!-- load angular -->
+
+	<script src="js/controllers/main.js"></script> <!-- load up our controller -->
+	<script src="js/services/calculations.js"></script> <!-- load our calculation service -->
+	<script src="js/core.js"></script> <!-- load our main application -->
+
+</head>
+<!-- SET THE CONTROLLER -->
+<body ng-controller="mainController">
+	<div class="container">
+
+		<div class="jumbotron text-center">
+			<h2>AngularJS app with Database Assignment - DELLEMC</h2><br/>
+			<h4>History count :</h4><span class="label label-info">{{ calculation.length }}</span>
+		</div>
+
+		<!-- calculation LIST -->
+		<div id="cal-list" class="row">
+			<div class="col-sm-4 col-sm-offset-4"><h3>History :</h3>
+
+				<!-- LOOP OVER THE TODOS IN $scope.todos -->
+				<div class="checkbox" ng-repeat="cal in calculation" ng-show="calculation.length > 0">
+					<label>Check to delete -
+						<input type="checkbox" ng-click="deleteCalculation(cal._id)"> {{ cal.firstNumber }} * {{cal.secondNumber}} = {{cal.result}}
+					</label>
+				</div>
+
+				<p class="text-center" ng-show="loading">
+					<span class="fa fa-spinner fa-spin fa-3x"></span>
+				</p>
+
+			</div>
+		</div>
+
+	
+		<!-- FORM TO CREATE calculation -->
+		<div id="cal-form" class="row">
+		<form name="myform">
+			<div class="form-group">
+  				<label for="firstNumber">First Number:</label>
+  				<input type="Number" pattern="[0-9.]+" min="0" class="form-control input" id="firstNumber" ng-model="formData.firstNumber" name="firstNumber" required>
+  				 <span ng-show="!myform.firstNumber.$pristine && myform.firstNumber.$invalid">
+      				Must be a valid Integer.
+    			</span>
+			</div>
+			<div class="form-group">
+  				<label for="secondNumber">Second Number:</label>
+  				<input type="Number" pattern="[0-9.]+" min="0" class="form-control input" id="secondNumber" ng-model="formData.secondNumber" name="secondNumber" required>
+  				<span ng-show="!myform.secondNumber.$pristine && myform.secondNumber.$invalid">
+      				Must be a valid Integer.
+    			</span>
+			</div>
+			<div class="form-group">
+				<button type="submit" class="btn btn-primary btn-lg" ng-click="createCalculation()" ng-disabled="myform.secondNumber.$invalid || myform.firstNumber.$invalid">Calculate/Save</button>
+				<span ng-show="flag"><random-numbers formData="formData"></random-numbers><br/></span> 
+			</div>
+		</form>
+		</div>
+
+		<div class="text-center text-muted">
+			<p>A demo by <a href="https://github.com/rajeshshegokar111?tab=repositories">Rajesh</a>.</p>
+			<p>Read the <a href="https://github.com/rajeshshegokar111?tab=repositories">git repo maintained by Rajesh</a>.</p>
+		</div>
+
+	</div>
+</body>
+</html>

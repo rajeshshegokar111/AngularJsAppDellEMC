@@ -1,0 +1,1 @@
+angular.module('calmodule', ['calculationController', 'calculationService']);
